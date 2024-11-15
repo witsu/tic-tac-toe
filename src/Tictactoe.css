@@ -1,7 +1,7 @@
 .cells {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    
+
 }
 .cell {
     display: flex;
@@ -11,5 +11,15 @@
     height: 100px;
     width: 100px;
     border: 1px solid #000;
+}
+.cell.next-X, .cell.next-O {
     cursor: pointer;
+}
+.cell.next-X:hover::after {
+    content: 'X';
+    opacity: 0.5;
+}
+.cell.next-O:hover::after {
+    content: 'O';
+    opacity: 0.5;
 }

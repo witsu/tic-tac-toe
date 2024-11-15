@@ -9,6 +9,9 @@ function Tictactoe() {
     const [player, setPlayer] = useState('X');
 
     const onCellClick = (index) => {
+        if (cells[index] !== null) {
+            return
+        }
         const newCells = cells.slice();
         newCells[index] = player;
         setCells(newCells);
@@ -20,11 +23,12 @@ function Tictactoe() {
 
     return (
         <div class="cells">
-            {cells.map((cell, index) => (
-                <div key={index} class="cell" onClick={() => onCellClick(index)}>
-                    {cell}
+            {cells.map((value, index) => {
+                const nextPlayerClass = value === null ? `next-${player}` : '';
+                return <div key={index} className={`cell ${nextPlayerClass}`} onClick={() => onCellClick(index)}>
+                    {value}
                 </div>
-            ))}
+            })}
         </div>
     )
 }
