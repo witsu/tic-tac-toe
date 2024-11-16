@@ -13,6 +13,8 @@ const GAME_STATE_WINNER_X = 'winner X';
 const GAME_STATE_WINNER_O = 'winner O';
 const GAME_STATE_DRAW = 'draw';
 
+type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_X | typeof GAME_STATE_WINNER_O | typeof GAME_STATE_DRAW;
+
 function Tictactoe() {
     const getEmptyCells = (): Cells => {
         return Array(9).fill(PLAYER_EMPTY);
@@ -28,13 +30,13 @@ function Tictactoe() {
         const newCells = cells.slice();
         newCells[index] = player;
         setCells(newCells);
-        checkResult(newCells);
+        setGameState(getGameState(newCells));
         changePlayer();
     }
     const canClick = (index: number): boolean => {
         return cells[index] === PLAYER_EMPTY && gameState === GAME_STATE_IN_PROGRESS;
     }
-    const checkResult = (cells: Cells) => {
+    const getGameState = (cells: Cells): GameState => {
         // Check for winner
         const lines = [
             [0, 1, 2], // horizontal
@@ -50,17 +52,17 @@ function Tictactoe() {
             const [a, b, c] = line;
             if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
                 if (cells[a] === PLAYER_X) {
-                    setGameState(GAME_STATE_WINNER_X);
+                    return GAME_STATE_WINNER_X;
                 } else {
-                    setGameState(GAME_STATE_WINNER_O);
+                    return GAME_STATE_WINNER_O;
                 }
-                return;
             }
         }
         // Check for draw
         if (!cells.includes(PLAYER_EMPTY)) {
-            setGameState(GAME_STATE_DRAW);
+            return GAME_STATE_DRAW;
         }
+        return GAME_STATE_IN_PROGRESS;
     }
     const changePlayer = () => {
         setPlayer(player === PLAYER_X ? PLAYER_O : PLAYER_X);
