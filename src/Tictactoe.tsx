@@ -3,6 +3,10 @@ import './Tictactoe.css';
 
 const PLAYER_X = 'X';
 const PLAYER_O = 'O';
+const PLAYER_EMPTY = null;
+
+type Cell = PLAYER_X | PLAYER_O | PLAYER_EMPTY;
+type Cells = Array<Cell>;
 
 const RESULT_IN_PROGRESS = 'in progress';
 const RESULT_WINNER_X = 'winner X';
@@ -10,11 +14,15 @@ const RESULT_WINNER_O = 'winner O';
 const RESULT_DRAW = 'draw';
 
 function Tictactoe() {
-    const [cells, setCells] = useState(Array(9).fill(null));
+    const getEmptyCells = (): Cells => {
+        return Array(9).fill(PLAYER_EMPTY);
+    }
+    const [cells, setCells] = useState(getEmptyCells());
     const [player, setPlayer] = useState(PLAYER_X);
     const [result, setResult] = useState(RESULT_IN_PROGRESS);
 
-    const onCellClick = (index) => {
+    
+    const onCellClick = (index: number) => {
         if (!canClick(index)) {
             return;
         }
@@ -24,10 +32,10 @@ function Tictactoe() {
         checkResult(newCells);
         changePlayer();
     }
-    const canClick = (index) => {
-        return cells[index] === null && result === RESULT_IN_PROGRESS;
+    const canClick = (index: number): boolean => {
+        return cells[index] === PLAYER_EMPTY && result === RESULT_IN_PROGRESS;
     }
-    const checkResult = (cells) => {
+    const checkResult = (cells: Cells) => {
         // Check for winner
         const lines = [
             [0, 1, 2], // horizontal
@@ -51,7 +59,7 @@ function Tictactoe() {
             }
         }
         // Check for draw
-        if (!cells.includes(null)) {
+        if (!cells.includes(PLAYER_EMPTY)) {
             setResult(RESULT_DRAW);
         }
     }
@@ -60,14 +68,14 @@ function Tictactoe() {
     }
     const restart = () => {
         setPlayer(PLAYER_X);
-        setCells(Array(9).fill(null));
+        setCells(getEmptyCells());
         setResult(RESULT_IN_PROGRESS);
     }
 
     return (
         <>
             <div class="cells">
-                {cells.map((value, index) => {
+                {cells.map((value: Cell, index) => {
                     const nextPlayerClass = canClick(index) ? `next-${player}` : '';
                     return <div key={index} className={`cell ${nextPlayerClass}`} onClick={() => onCellClick(index)}>
                         {value}
