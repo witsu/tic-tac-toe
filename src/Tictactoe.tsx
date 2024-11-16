@@ -15,6 +15,7 @@ import './Tictactoe.css';
 function Tictactoe() {
     const [cells, setCells] = useState(getEmptyCells());
     const [gameState, setGameState] = useState(GAME_STATE_IN_PROGRESS);
+    const [difficulty, setDifficulty] = useState(0);
 
     const onCellClick = (index: number) => {
         if (!canClick(index)) {
@@ -29,7 +30,7 @@ function Tictactoe() {
         if (gameState !== GAME_STATE_IN_PROGRESS) {
             return;
         }
-        const move = findBestMove(cells);
+        const move = findBestMove(cells, difficulty);
         const newCells = setCell(cells, move, PLAYER_AI);
         setGameState(getGameState(newCells));
     }
@@ -49,6 +50,20 @@ function Tictactoe() {
 
     return (
         <>
+            <div className='difficulty'>
+                Difficulty level:
+                <select
+                    value={difficulty}
+                    onChange={e => setDifficulty(e.target.value)}
+                >
+                    <option value="0">Beginner</option>
+                    <option value="1">Novice</option>
+                    <option value="2">Advanced</option>
+                    <option value="3">Expert</option>
+                    <option value="4">Legend</option>
+                </select>
+            </div>
+
             <div className="cells">
                 {cells.map((value: Cell, index) => {
                     const nextPlayerClass = canClick(index) ? `next-${PLAYER_USER}` : '';

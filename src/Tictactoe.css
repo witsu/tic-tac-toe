@@ -1,3 +1,8 @@
+.difficulty {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
 .cells {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

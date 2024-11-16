@@ -45,13 +45,13 @@ export function getGameState(cells: Cells): GameState {
     return GAME_STATE_IN_PROGRESS;
 }
 
-export function findBestMove(cells: Cells): index {
+export function findBestMove(cells: Cells, difficulty: number): index {
     let bestScore = -Infinity;
     let move: number;
     for (let i = 0; i < cells.length; i++) {
         if (cells[i] == PLAYER_EMPTY) {
             cells[i] = PLAYER_AI;
-            const score = minimax(cells, 0, false);
+            const score = minimax(cells, difficulty, false);
             cells[i] = PLAYER_EMPTY;
             if (score > bestScore) {
                 bestScore = score;
@@ -74,6 +74,9 @@ function getScores(gameState: GameState): number {
 }
 
 function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
+    if (depth === 0) {
+        return 0;
+    }
     const gameState = getGameState(cells);
     if (gameState !== GAME_STATE_IN_PROGRESS) {
         return getScores(gameState);
@@ -84,7 +87,7 @@ function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
         for (let i = 0; i < cells.length; i++) {
             if (cells[i] == PLAYER_EMPTY) {
                 cells[i] = PLAYER_AI;
-                const score = minimax(cells, depth + 1, false);
+                const score = minimax(cells, depth - 1, false);
                 cells[i] = PLAYER_EMPTY;
                 bestScore = Math.max(score, bestScore);
             }
@@ -95,7 +98,7 @@ function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
         for (let i = 0; i < cells.length; i++) {
             if (cells[i] == PLAYER_EMPTY) {
                 cells[i] = PLAYER_USER;
-                const score = minimax(cells, depth + 1, true);
+                const score = minimax(cells, depth - 1, true);
                 cells[i] = PLAYER_EMPTY;
                 bestScore = Math.min(score, bestScore);
             }

@@ -28,21 +28,27 @@ describe('getGameState', () => {
     })
 })
 
-describe('findBestMove', () => {
+describe('findBestMove on hard difficulty', () => {
     test('should put O to block 1st row', () => {
         const cells = ['X', 'X', null, null, 'O', null, null, null, null]
-        expect(findBestMove(cells)).toEqual(2)
+        expect(findBestMove(cells, 4)).toEqual(2)
     })
     test('should put X to block diagonal', () => {
         const cells = ['X', 'X', 'O', null, 'O', null, null, null, null]
-        expect(findBestMove(cells)).toEqual(6)
+        expect(findBestMove(cells, 4)).toEqual(6)
     })
     test('should put O to block 1st column', () => {
         const cells = ['X', 'X', 'O', null, 'O', null, 'X', null, null]
-        expect(findBestMove(cells)).toEqual(3)
+        expect(findBestMove(cells, 4)).toEqual(3)
     })
     test('should put X to block 2nd row', () => {
         const cells = ['X', 'X', 'O', 'O', 'O', null, 'X', null, null]
-        expect(findBestMove(cells)).toEqual(5)
+        expect(findBestMove(cells, 4)).toEqual(5)
+    })
+})
+describe('findBestMove on easy difficulty', () => {
+    test('should put O to first empty cell', () => {
+        const cells = ['X', 'O', null, 'X', null, null, null, null]
+        expect(findBestMove(cells, 0)).toEqual(2)
     })
 })
