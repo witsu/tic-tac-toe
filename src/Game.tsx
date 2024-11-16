@@ -16,7 +16,7 @@ export function getEmptyCells(): Cells {
     return Array(9).fill(PLAYER_EMPTY);
 }
 
-export function getGameState(cells: Cells): GameState {
+export function getGameState(cells: Cells): [GameState, number] {
     // Check for winner
     const lines = [
         [0, 1, 2], // horizontal
@@ -28,21 +28,21 @@ export function getGameState(cells: Cells): GameState {
         [0, 4, 8], // diagonal
         [2, 4, 6],
     ];
-    for (const line of lines) {
-        const [a, b, c] = line;
+    for (let l = 0; l < lines.length; l++) {
+        const [a, b, c] = lines[l];
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
             if (cells[a] === PLAYER_AI) {
-                return GAME_STATE_WINNER_AI;
+                return [GAME_STATE_WINNER_AI, l + 1];
             } else {
-                return GAME_STATE_WINNER_USER;
+                return [GAME_STATE_WINNER_USER, l + 1];
             }
         }
     }
     // Check for draw
     if (!cells.includes(PLAYER_EMPTY)) {
-        return GAME_STATE_DRAW;
+        return [GAME_STATE_DRAW, 0];
     }
-    return GAME_STATE_IN_PROGRESS;
+    return [GAME_STATE_IN_PROGRESS, 0];
 }
 
 export function findBestMove(cells: Cells, difficulty: number): index {
@@ -77,7 +77,7 @@ function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
     if (depth === 0) {
         return 0;
     }
-    const gameState = getGameState(cells);
+    const [gameState] = getGameState(cells);
     if (gameState !== GAME_STATE_IN_PROGRESS) {
         return getScores(gameState);
     }

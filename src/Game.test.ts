@@ -12,19 +12,23 @@ import {
 describe('getGameState', () => {
     test('state should be in progress on init', () => {
         const cells = getEmptyCells()
-        expect(getGameState(cells)).toBe(GAME_STATE_IN_PROGRESS)
+        const [state] = getGameState(cells)
+        expect(state).toBe(GAME_STATE_IN_PROGRESS)
     })
     test('state should be draw', () => {
         const cells = ['X', 'O', 'X', 'X', 'O', 'O', 'O', 'X', 'X']
-        expect(getGameState(cells)).toBe(GAME_STATE_DRAW)
+        const [state] = getGameState(cells)
+        expect(state).toBe(GAME_STATE_DRAW)
     })
     test('state should be winner X', () => {
         const cells = ['X', 'O', 'X', 'X', 'O', 'O', 'X', 'X', 'X']
-        expect(getGameState(cells)).toBe(GAME_STATE_WINNER_AI)
+        const [state] = getGameState(cells)
+        expect(state).toBe(GAME_STATE_WINNER_AI)
     })
     test('state should be winner Y', () => {
         const cells = ['X', 'O', 'X', 'X', 'O', 'O', 'O', 'O', 'X']
-        expect(getGameState(cells)).toBe(GAME_STATE_WINNER_USER)
+        const [state] = getGameState(cells)
+        expect(state).toBe(GAME_STATE_WINNER_USER)
     })
 })
 

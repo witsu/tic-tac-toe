@@ -10,6 +10,7 @@
     margin-left: 10px;
 }
 .cells {
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     margin-bottom: 20px;
@@ -34,4 +35,59 @@
 .cell.next-O:hover::after {
     content: 'O';
     opacity: 0.5;
+}
+
+.strike {
+    position: absolute;
+    background: dodgerblue;
+}
+.strike-line-1 {
+    top: 16%;
+    left: 5%;
+    width: 90%;
+    height: 4px;
+}
+.strike-line-2 {
+    top: 49%;
+    left: 5%;
+    width: 90%;
+    height: 4px;
+}
+.strike-line-3 {
+    top: 83%;
+    left: 5%;
+    width: 90%;
+    height: 4px;
+}
+.strike-line-4 {
+    top: 5%;
+    left: 16%;
+    width: 4px;
+    height: 90%;
+}
+.strike-line-5 {
+    top: 5%;
+    left: 50%;
+    width: 4px;
+    height: 90%;
+}
+.strike-line-6 {
+    top: 5%;
+    left: 83%;
+    width: 4px;
+    height: 90%;
+}
+.strike-line-7 {
+    top: 49%;
+    left: 5%;
+    width: 90%;
+    height: 5px;
+    transform: skewY(45deg);
+}
+.strike-line-8 {
+    top: 50%;
+    left: 5%;
+    width: 90%;
+    height: 5px;
+    transform: skewY(-45deg);
 }

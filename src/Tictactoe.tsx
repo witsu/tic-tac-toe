@@ -16,14 +16,16 @@ function Tictactoe() {
     const [cells, setCells] = useState(getEmptyCells());
     const [gameState, setGameState] = useState(GAME_STATE_IN_PROGRESS);
     const [difficulty, setDifficulty] = useState(0);
+    const [strike, setStrike] = useState(0);
 
     const onCellClick = (index: number) => {
         if (!canClick(index)) {
             return;
         }
         const newCells = setCell(cells, index, PLAYER_USER);
-        const gameState = getGameState(newCells);
+        const [gameState, strike] = getGameState(newCells);
         setGameState(gameState);
+        setStrike(strike);
         makeAIMove(gameState, newCells);
     }
     const makeAIMove = (gameState: GameState, cells: Cells) => {
@@ -32,7 +34,9 @@ function Tictactoe() {
         }
         const move = findBestMove(cells, difficulty);
         const newCells = setCell(cells, move, PLAYER_AI);
-        setGameState(getGameState(newCells));
+        const [newGameState, strike] = getGameState(newCells)
+        setGameState(newGameState);
+        setStrike(strike);
     }
     const setCell = (cells: Cells, index: number, value: Cell): Cells => {
         const newCells = cells.slice();
@@ -46,6 +50,7 @@ function Tictactoe() {
     const restart = () => {
         setCells(getEmptyCells());
         setGameState(GAME_STATE_IN_PROGRESS);
+        setStrike(0);
     }
 
     return (
@@ -70,6 +75,9 @@ function Tictactoe() {
                         {value}
                     </div>
                 })}
+                {strike !== 0 && (
+                    <div className={`strike strike-line-${strike}`}></div>
+                )}
             </div>
             {gameState !== GAME_STATE_IN_PROGRESS && (
                 <div>
