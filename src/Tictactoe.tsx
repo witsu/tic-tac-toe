@@ -8,10 +8,10 @@ const PLAYER_EMPTY = null;
 type Cell = PLAYER_X | PLAYER_O | PLAYER_EMPTY;
 type Cells = Array<Cell>;
 
-const RESULT_IN_PROGRESS = 'in progress';
-const RESULT_WINNER_X = 'winner X';
-const RESULT_WINNER_O = 'winner O';
-const RESULT_DRAW = 'draw';
+const GAME_STATE_IN_PROGRESS = 'in progress';
+const GAME_STATE_WINNER_X = 'winner X';
+const GAME_STATE_WINNER_O = 'winner O';
+const GAME_STATE_DRAW = 'draw';
 
 function Tictactoe() {
     const getEmptyCells = (): Cells => {
@@ -19,9 +19,8 @@ function Tictactoe() {
     }
     const [cells, setCells] = useState(getEmptyCells());
     const [player, setPlayer] = useState(PLAYER_X);
-    const [result, setResult] = useState(RESULT_IN_PROGRESS);
+    const [gameState, setGameState] = useState(GAME_STATE_IN_PROGRESS);
 
-    
     const onCellClick = (index: number) => {
         if (!canClick(index)) {
             return;
@@ -33,7 +32,7 @@ function Tictactoe() {
         changePlayer();
     }
     const canClick = (index: number): boolean => {
-        return cells[index] === PLAYER_EMPTY && result === RESULT_IN_PROGRESS;
+        return cells[index] === PLAYER_EMPTY && gameState === GAME_STATE_IN_PROGRESS;
     }
     const checkResult = (cells: Cells) => {
         // Check for winner
@@ -51,16 +50,16 @@ function Tictactoe() {
             const [a, b, c] = line;
             if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
                 if (cells[a] === PLAYER_X) {
-                    setResult(RESULT_WINNER_X);
+                    setGameState(GAME_STATE_WINNER_X);
                 } else {
-                    setResult(RESULT_WINNER_O);
+                    setGameState(GAME_STATE_WINNER_O);
                 }
                 return;
             }
         }
         // Check for draw
         if (!cells.includes(PLAYER_EMPTY)) {
-            setResult(RESULT_DRAW);
+            setGameState(GAME_STATE_DRAW);
         }
     }
     const changePlayer = () => {
@@ -69,7 +68,7 @@ function Tictactoe() {
     const restart = () => {
         setPlayer(PLAYER_X);
         setCells(getEmptyCells());
-        setResult(RESULT_IN_PROGRESS);
+        setGameState(GAME_STATE_IN_PROGRESS);
     }
 
     return (
@@ -82,9 +81,9 @@ function Tictactoe() {
                     </div>
                 })}
             </div>
-            {result !== RESULT_IN_PROGRESS && (
+            {gameState !== GAME_STATE_IN_PROGRESS && (
                 <div>
-                    <div class="result">{result}</div>
+                    <div class="result">{gameState}</div>
                     <button onClick={restart}>Reset</button>
                 </div>
             )}
