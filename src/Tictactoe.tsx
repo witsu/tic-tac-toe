@@ -1,19 +1,6 @@
 import { useState } from 'react';
+import { PLAYER_X, PLAYER_O, PLAYER_EMPTY, GAME_STATE_IN_PROGRESS, getGameState, Cells, Cell } from './Game';
 import './Tictactoe.css';
-
-const PLAYER_X = 'X';
-const PLAYER_O = 'O';
-const PLAYER_EMPTY = null;
-
-type Cell = PLAYER_X | PLAYER_O | PLAYER_EMPTY;
-type Cells = Array<Cell>;
-
-const GAME_STATE_IN_PROGRESS = 'in progress';
-const GAME_STATE_WINNER_X = 'winner X';
-const GAME_STATE_WINNER_O = 'winner O';
-const GAME_STATE_DRAW = 'draw';
-
-type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_X | typeof GAME_STATE_WINNER_O | typeof GAME_STATE_DRAW;
 
 function Tictactoe() {
     const getEmptyCells = (): Cells => {
@@ -36,34 +23,6 @@ function Tictactoe() {
     const canClick = (index: number): boolean => {
         return cells[index] === PLAYER_EMPTY && gameState === GAME_STATE_IN_PROGRESS;
     }
-    const getGameState = (cells: Cells): GameState => {
-        // Check for winner
-        const lines = [
-            [0, 1, 2], // horizontal
-            [3, 4, 5],
-            [6, 7, 8],
-            [0, 3, 6], // vertical
-            [1, 4, 7],
-            [2, 5, 8],
-            [0, 4, 8], // diagonal
-            [2, 4, 6],
-        ];
-        for (const line of lines) {
-            const [a, b, c] = line;
-            if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-                if (cells[a] === PLAYER_X) {
-                    return GAME_STATE_WINNER_X;
-                } else {
-                    return GAME_STATE_WINNER_O;
-                }
-            }
-        }
-        // Check for draw
-        if (!cells.includes(PLAYER_EMPTY)) {
-            return GAME_STATE_DRAW;
-        }
-        return GAME_STATE_IN_PROGRESS;
-    }
     const changePlayer = () => {
         setPlayer(player === PLAYER_X ? PLAYER_O : PLAYER_X);
     }
@@ -75,7 +34,7 @@ function Tictactoe() {
 
     return (
         <>
-            <div class="cells">
+            <div className="cells">
                 {cells.map((value: Cell, index) => {
                     const nextPlayerClass = canClick(index) ? `next-${player}` : '';
                     return <div key={index} className={`cell ${nextPlayerClass}`} onClick={() => onCellClick(index)}>
@@ -85,7 +44,7 @@ function Tictactoe() {
             </div>
             {gameState !== GAME_STATE_IN_PROGRESS && (
                 <div>
-                    <div class="result">{gameState}</div>
+                    <div className="result">{gameState}</div>
                     <button onClick={restart}>Reset</button>
                 </div>
             )}
