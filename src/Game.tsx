@@ -1,8 +1,8 @@
-export const PLAYER_X = 'X';
-export const PLAYER_O = 'O';
+export const PLAYER_AI = 'X';
+export const PLAYER_USER = 'O';
 export const PLAYER_EMPTY = null;
 
-export type Cell = typeof PLAYER_X | typeof PLAYER_O | typeof PLAYER_EMPTY;
+export type Cell = typeof PLAYER_AI | typeof PLAYER_USER | typeof PLAYER_EMPTY;
 export type Cells = Array<Cell>;
 
 export const GAME_STATE_IN_PROGRESS = 'in progress';
@@ -31,7 +31,7 @@ export function getGameState(cells: Cells): GameState {
     for (const line of lines) {
         const [a, b, c] = line;
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
-            if (cells[a] === PLAYER_X) {
+            if (cells[a] === PLAYER_AI) {
                 return GAME_STATE_WINNER_X;
             } else {
                 return GAME_STATE_WINNER_O;
@@ -50,7 +50,7 @@ export function findBestMove(cells: Cells): index {
     let move: number;
     for (let i = 0; i < cells.length; i++) {
         if (cells[i] == PLAYER_EMPTY) {
-            cells[i] = PLAYER_X;
+            cells[i] = PLAYER_AI;
             const score = minimax(cells, 0, false);
             cells[i] = PLAYER_EMPTY;
             if (score > bestScore) {
@@ -83,7 +83,7 @@ function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
         let bestScore = -Infinity;
         for (let i = 0; i < cells.length; i++) {
             if (cells[i] == PLAYER_EMPTY) {
-                cells[i] = PLAYER_X;
+                cells[i] = PLAYER_AI;
                 const score = minimax(cells, depth + 1, false);
                 cells[i] = PLAYER_EMPTY;
                 bestScore = Math.max(score, bestScore);
@@ -94,7 +94,7 @@ function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
         let bestScore = Infinity;
         for (let i = 0; i < cells.length; i++) {
             if (cells[i] == PLAYER_EMPTY) {
-                cells[i] = PLAYER_O;
+                cells[i] = PLAYER_USER;
                 const score = minimax(cells, depth + 1, true);
                 cells[i] = PLAYER_EMPTY;
                 bestScore = Math.min(score, bestScore);
