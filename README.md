@@ -8,6 +8,7 @@ This is a simple Tic Tac Toe game implemented using React and TypeScript.
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
+    - [Preview](#preview)
   - [Testing](#testing)
 
 ## Installation
@@ -31,6 +32,10 @@ This is a simple Tic Tac Toe game implemented using React and TypeScript.
 ## Usage
 
 Open your browser and navigate to `http://localhost:3000` to play the game.
+
+### Preview
+
+![screenshot](screenshot.png)
 
 ## Testing
 
