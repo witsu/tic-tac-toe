@@ -6,11 +6,11 @@ export type Cell = typeof PLAYER_AI | typeof PLAYER_USER | typeof PLAYER_EMPTY;
 export type Cells = Array<Cell>;
 
 export const GAME_STATE_IN_PROGRESS = 'in progress';
-export const GAME_STATE_WINNER_X = 'winner X';
-export const GAME_STATE_WINNER_O = 'winner O';
-export const GAME_STATE_DRAW = 'draw';
+export const GAME_STATE_WINNER_AI = 'You lost';
+export const GAME_STATE_WINNER_USER = 'You won';
+export const GAME_STATE_DRAW = 'Draw';
 
-export type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_X | typeof GAME_STATE_WINNER_O | typeof GAME_STATE_DRAW;
+export type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_AI | typeof GAME_STATE_WINNER_USER | typeof GAME_STATE_DRAW;
 
 export function getEmptyCells(): Cells {
     return Array(9).fill(PLAYER_EMPTY);
@@ -32,9 +32,9 @@ export function getGameState(cells: Cells): GameState {
         const [a, b, c] = line;
         if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
             if (cells[a] === PLAYER_AI) {
-                return GAME_STATE_WINNER_X;
+                return GAME_STATE_WINNER_AI;
             } else {
-                return GAME_STATE_WINNER_O;
+                return GAME_STATE_WINNER_USER;
             }
         }
     }
@@ -64,9 +64,9 @@ export function findBestMove(cells: Cells, difficulty: number): index {
 
 function getScores(gameState: GameState): number {
     switch (gameState) {
-        case GAME_STATE_WINNER_X:
+        case GAME_STATE_WINNER_AI:
             return 1;
-        case GAME_STATE_WINNER_O:
+        case GAME_STATE_WINNER_USER:
             return -1;
         case GAME_STATE_DRAW:
             return 0;

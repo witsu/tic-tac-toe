@@ -54,13 +54,12 @@ function Tictactoe() {
                 Difficulty level:
                 <select
                     value={difficulty}
-                    onChange={e => setDifficulty(e.target.value)}
+                    onChange={e => setDifficulty(Number(e.target.value))}
                 >
-                    <option value="0">Beginner</option>
-                    <option value="1">Novice</option>
-                    <option value="2">Advanced</option>
-                    <option value="3">Expert</option>
-                    <option value="4">Legend</option>
+                    <option value="0">Novice</option>
+                    <option value="3">Advanced</option>
+                    <option value="6">Expert</option>
+                    <option value="9">Legend</option>
                 </select>
             </div>
 
@@ -75,7 +74,7 @@ function Tictactoe() {
             {gameState !== GAME_STATE_IN_PROGRESS && (
                 <div>
                     <div className="result">{gameState}</div>
-                    <button onClick={restart}>Reset</button>
+                    <button onClick={restart}>Restart</button>
                 </div>
             )}
         </>
