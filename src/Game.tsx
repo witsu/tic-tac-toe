@@ -44,3 +44,62 @@ export function getGameState(cells: Cells): GameState {
     }
     return GAME_STATE_IN_PROGRESS;
 }
+
+export function findBestMove(cells: Cells): index {
+    let bestScore = -Infinity;
+    let move: number;
+    for (let i = 0; i < cells.length; i++) {
+        if (cells[i] == PLAYER_EMPTY) {
+            cells[i] = PLAYER_X;
+            const score = minimax(cells, 0, false);
+            cells[i] = PLAYER_EMPTY;
+            if (score > bestScore) {
+                bestScore = score;
+                move = i;
+            }
+        }
+    }
+    return move;
+}
+
+function getScores(gameState: GameState): number {
+    switch (gameState) {
+        case GAME_STATE_WINNER_X:
+            return 1;
+        case GAME_STATE_WINNER_O:
+            return -1;
+        case GAME_STATE_DRAW:
+            return 0;
+    };
+}
+
+function minimax(cells: Cells, depth: number, isMaximizing: boolean): number {
+    const gameState = getGameState(cells);
+    if (gameState !== GAME_STATE_IN_PROGRESS) {
+        return getScores(gameState);
+    }
+
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < cells.length; i++) {
+            if (cells[i] == PLAYER_EMPTY) {
+                cells[i] = PLAYER_X;
+                const score = minimax(cells, depth + 1, false);
+                cells[i] = PLAYER_EMPTY;
+                bestScore = Math.max(score, bestScore);
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < cells.length; i++) {
+            if (cells[i] == PLAYER_EMPTY) {
+                cells[i] = PLAYER_O;
+                const score = minimax(cells, depth + 1, true);
+                cells[i] = PLAYER_EMPTY;
+                bestScore = Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
+    }
+}

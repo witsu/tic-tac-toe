@@ -5,7 +5,8 @@ import {
     GAME_STATE_WINNER_X,
     GAME_STATE_WINNER_O,
     getEmptyCells,
-    getGameState
+    getGameState,
+    findBestMove
 } from './Game.tsx'
 
 describe('getGameState', () => {
@@ -24,5 +25,24 @@ describe('getGameState', () => {
     test('state should be winner Y', () => {
         const cells = ['X', 'O', 'X', 'X', 'O', 'O', 'O', 'O', 'X']
         expect(getGameState(cells)).toBe(GAME_STATE_WINNER_O)
+    })
+})
+
+describe('findBestMove', () => {
+    test('should put O to block 1st row', () => {
+        const cells = ['X', 'X', null, null, 'O', null, null, null, null]
+        expect(findBestMove(cells)).toEqual(2)
+    })
+    test('should put X to block diagonal', () => {
+        const cells = ['X', 'X', 'O', null, 'O', null, null, null, null]
+        expect(findBestMove(cells)).toEqual(6)
+    })
+    test('should put O to block 1st column', () => {
+        const cells = ['X', 'X', 'O', null, 'O', null, 'X', null, null]
+        expect(findBestMove(cells)).toEqual(3)
+    })
+    test('should put X to block 2nd row', () => {
+        const cells = ['X', 'X', 'O', 'O', 'O', null, 'X', null, null]
+        expect(findBestMove(cells)).toEqual(5)
     })
 })
