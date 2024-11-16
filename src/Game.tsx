@@ -12,6 +12,10 @@ export const GAME_STATE_DRAW = 'draw';
 
 export type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_X | typeof GAME_STATE_WINNER_O | typeof GAME_STATE_DRAW;
 
+export function getEmptyCells(): Cells {
+    return Array(9).fill(PLAYER_EMPTY);
+}
+
 export function getGameState(cells: Cells): GameState {
     // Check for winner
     const lines = [

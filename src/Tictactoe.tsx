@@ -1,11 +1,8 @@
 import { useState } from 'react';
-import { PLAYER_X, PLAYER_O, PLAYER_EMPTY, GAME_STATE_IN_PROGRESS, getGameState, Cells, Cell } from './Game';
+import { PLAYER_X, PLAYER_O, PLAYER_EMPTY, GAME_STATE_IN_PROGRESS, getGameState, getEmptyCells, Cell } from './Game';
 import './Tictactoe.css';
 
 function Tictactoe() {
-    const getEmptyCells = (): Cells => {
-        return Array(9).fill(PLAYER_EMPTY);
-    }
     const [cells, setCells] = useState(getEmptyCells());
     const [player, setPlayer] = useState(PLAYER_X);
     const [gameState, setGameState] = useState(GAME_STATE_IN_PROGRESS);
