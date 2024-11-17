@@ -54,9 +54,3 @@ describe('findBestMove on difficulty 9', () => {
         expect(findBestMove(cells, 9)).toEqual(5)
     })
 })
-describe('findBestMove on easy difficulty', () => {
-    test('should put O to first empty cell', () => {
-        const cells = ['X', 'O', null, 'X', null, null, null, null]
-        expect(findBestMove(cells, 0)).toEqual(2)
-    })
-})

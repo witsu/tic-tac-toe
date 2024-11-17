@@ -61,10 +61,10 @@ function Tictactoe() {
                     value={difficulty}
                     onChange={e => setDifficulty(Number(e.target.value))}
                 >
-                    <option value="0">Novice</option>
+                    <option value="1">Novice</option>
                     <option value="3">Advanced</option>
-                    <option value="6">Expert</option>
-                    <option value="9">Legend</option>
+                    <option value="5">Expert</option>
+                    <option value="8">Legend</option>
                 </select>
             </div>
 
