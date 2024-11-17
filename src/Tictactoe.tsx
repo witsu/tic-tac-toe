@@ -7,51 +7,41 @@ import {
     getGameState,
     getEmptyCells,
     Cell,
-    findBestMove,
-    GameState
+    findBestMove
 } from './Game';
 import './Tictactoe.css';
 
 function Tictactoe() {
     const [cells, setCells] = useState(getEmptyCells());
-    const [gameState, setGameState] = useState(GAME_STATE_IN_PROGRESS);
     const [difficulty, setDifficulty] = useState(0);
-    const [strike, setStrike] = useState(0);
+    const [gameState, strike] = getGameState(cells);
 
     const onCellClick = (index: number) => {
         if (!canClick(index)) {
             return;
         }
-        const newCells = setCell(cells, index, PLAYER_USER);
-        const [gameState, strike] = getGameState(newCells);
-        setGameState(gameState);
-        setStrike(strike);
-        makeAIMove(gameState, newCells);
-    }
-    const makeAIMove = (gameState: GameState, cells: Cells) => {
-        if (gameState !== GAME_STATE_IN_PROGRESS) {
-            return;
-        }
-        const move = findBestMove(cells, difficulty);
-        const newCells = setCell(cells, move, PLAYER_AI);
-        const [newGameState, strike] = getGameState(newCells)
-        setGameState(newGameState);
-        setStrike(strike);
-    }
-    const setCell = (cells: Cells, index: number, value: Cell): Cells => {
-        const newCells = cells.slice();
-        newCells[index] = value;
-        setCells(newCells);
-        return newCells;
+        setCell(index, PLAYER_USER);
     }
     const canClick = (index: number): boolean => {
         return cells[index] === PLAYER_EMPTY && gameState === GAME_STATE_IN_PROGRESS;
     }
+    const setCell = (index: number, value: Cell) => {
+        const newCells = cells.slice();
+        newCells[index] = value;
+        setCells(newCells);
+    }
+    const makeAIMove = () => {
+        if (gameState !== GAME_STATE_IN_PROGRESS || cells.filter(c => c === PLAYER_EMPTY).length % 2 !== 0) {
+            return;
+        }
+        const move = findBestMove(cells, difficulty);
+        setCell(move, PLAYER_AI);
+    }
     const restart = () => {
         setCells(getEmptyCells());
-        setGameState(GAME_STATE_IN_PROGRESS);
-        setStrike(0);
     }
+
+    makeAIMove();
 
     return (
         <>
