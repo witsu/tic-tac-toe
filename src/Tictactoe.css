@@ -1,14 +1,3 @@
-.difficulty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.difficulty select {
-    font-size: 1em;
-    padding: 0.5em;
-    margin-left: 10px;
-}
 .cells {
     position: relative;
     display: grid;

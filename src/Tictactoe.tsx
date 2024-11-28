@@ -1,19 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     PLAYER_AI,
     PLAYER_USER,
     PLAYER_EMPTY,
     GAME_STATE_IN_PROGRESS,
     getGameState,
-    getEmptyCells,
     Cell,
     findBestMove
 } from './Game';
 import './Tictactoe.css';
 
-function Tictactoe() {
-    const [cells, setCells] = useState(getEmptyCells());
-    const [difficulty, setDifficulty] = useState(0);
+function Tictactoe({game, pb}) {
+    const [cells, setCells] = useState(game.cells);
     const [gameState, strike] = getGameState(cells);
 
     const onCellClick = (index: number) => {
@@ -34,30 +32,24 @@ function Tictactoe() {
         if (gameState !== GAME_STATE_IN_PROGRESS || cells.filter(c => c === PLAYER_EMPTY).length % 2 !== 0) {
             return;
         }
-        const move = findBestMove(cells, difficulty);
+        const move = findBestMove(cells, game.difficulty);
         setCell(move, PLAYER_AI);
     }
-    const restart = () => {
-        setCells(getEmptyCells());
-    }
+
+    useEffect(() => {
+        if (game.cells.toString() === cells.toString() && game.state === gameState) {
+            return
+        }
+        pb.collection('games').update(game.id, {
+            cells: cells,
+            state: gameState
+        });
+    }, [pb, game, cells, gameState]);
 
     makeAIMove();
 
     return (
         <>
-            <div className='difficulty'>
-                Difficulty level:
-                <select
-                    value={difficulty}
-                    onChange={e => setDifficulty(Number(e.target.value))}
-                >
-                    <option value="1">Novice</option>
-                    <option value="3">Advanced</option>
-                    <option value="5">Expert</option>
-                    <option value="8">Legend</option>
-                </select>
-            </div>
-
             <div className="cells">
                 {cells.map((value: Cell, index) => {
                     const nextPlayerClass = canClick(index) ? `next-${PLAYER_USER}` : '';
@@ -70,10 +62,7 @@ function Tictactoe() {
                 )}
             </div>
             {gameState !== GAME_STATE_IN_PROGRESS && (
-                <div>
-                    <div className="result">{gameState}</div>
-                    <button onClick={restart}>Restart</button>
-                </div>
+                <div className="result">{gameState}</div>
             )}
         </>
     )

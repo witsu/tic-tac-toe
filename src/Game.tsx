@@ -5,10 +5,10 @@ export const PLAYER_EMPTY = null;
 export type Cell = typeof PLAYER_AI | typeof PLAYER_USER | typeof PLAYER_EMPTY;
 export type Cells = Array<Cell>;
 
-export const GAME_STATE_IN_PROGRESS = 'in progress';
-export const GAME_STATE_WINNER_AI = 'You lost';
-export const GAME_STATE_WINNER_USER = 'You won';
-export const GAME_STATE_DRAW = 'Draw';
+export const GAME_STATE_IN_PROGRESS = 'progress';
+export const GAME_STATE_WINNER_AI = 'lose';
+export const GAME_STATE_WINNER_USER = 'win';
+export const GAME_STATE_DRAW = 'draw';
 
 export type GameState = typeof GAME_STATE_IN_PROGRESS | typeof GAME_STATE_WINNER_AI | typeof GAME_STATE_WINNER_USER | typeof GAME_STATE_DRAW;
 
