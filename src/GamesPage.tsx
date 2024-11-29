@@ -3,6 +3,12 @@ import { Link } from "react-router";
 import pb from './pocketbaseClient';
 import getDifficultyName from './difficulty';
 import './GamesPage.css';
+import { formatDistanceToNow } from 'date-fns';
+
+function formatTimeFromNow(dateString: string): string {
+    const date = new Date(dateString);
+    return formatDistanceToNow(date, { addSuffix: true });
+}
 
 function GamesPage() {
     const [games, setGames] = useState([]);
@@ -23,7 +29,7 @@ function GamesPage() {
             <ul className='games'>
                 {games.map((game) => {
                     return <li key={game.id}>
-                        <Link to={game.id}>{game.state}</Link> vs {getDifficultyName(game.difficulty)}
+                        <Link to={game.id}>{game.state}</Link> vs {getDifficultyName(game.difficulty)} {formatTimeFromNow(game.created)}
                     </li>
                 })}
             </ul>
