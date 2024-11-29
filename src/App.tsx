@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import pb from './pocketbaseClient';
 import { getEmptyCells, GAME_STATE_IN_PROGRESS } from './Game';
-import { Outlet, useNavigate } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 
 import './App.css'
+import getDifficultyName from './difficulty';
 
 function App() {
     const [difficulty, setDifficulty] = useState(0);
@@ -30,12 +31,13 @@ function App() {
                     value={difficulty}
                     onChange={e => setDifficulty(Number(e.target.value))}
                 >
-                    <option value="1">Novice</option>
-                    <option value="3">Advanced</option>
-                    <option value="5">Expert</option>
-                    <option value="8">Legend</option>
+                    <option value="1">{getDifficultyName(1)}</option>
+                    <option value="3">{getDifficultyName(3)}</option>
+                    <option value="5">{getDifficultyName(5)}</option>
+                    <option value="8">{getDifficultyName(8)}</option>
                 </select>
             </div>
+            <div className='previousGames'>or check previous <Link to="games">games</Link></div>
             <Outlet />
         </>
     )
