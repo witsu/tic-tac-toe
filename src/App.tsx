@@ -4,7 +4,7 @@ import { getEmptyCells, GAME_STATE_IN_PROGRESS } from './Game';
 import { Link, Outlet, useNavigate } from "react-router";
 
 import './App.css'
-import getDifficultyName from './difficulty';
+import { getDifficultyName } from './difficultyName';
 
 function App() {
     const [difficulty, setDifficulty] = useState(0);

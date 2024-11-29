@@ -1,4 +1,4 @@
-function getDifficultyName(level: number): string {
+export function getDifficultyName(level: number): string {
     switch (level) {
         case 0:
         case 1:
@@ -11,4 +11,3 @@ function getDifficultyName(level: number): string {
             return 'legend';
     }
 }
-export default getDifficultyName;

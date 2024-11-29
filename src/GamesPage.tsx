@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from "react-router";
-import pb from './pocketbaseClient';
-import getDifficultyName from './difficulty';
-import './GamesPage.css';
 import { formatDistanceToNow } from 'date-fns';
+import pb from './pocketbaseClient';
+import Difficulty from './Difficulty';
+import './GamesPage.css';
 
 function formatTimeFromNow(dateString: string): string {
     const date = new Date(dateString);
@@ -29,7 +29,7 @@ function GamesPage() {
             <ul className='games'>
                 {games.map((game) => {
                     return <li key={game.id}>
-                        <Link to={game.id}>{game.state}</Link> vs {getDifficultyName(game.difficulty)} {formatTimeFromNow(game.created)}
+                        <Link to={game.id}>{game.state}</Link> vs <Difficulty level={game.difficulty}></Difficulty> {formatTimeFromNow(game.created)}
                     </li>
                 })}
             </ul>
