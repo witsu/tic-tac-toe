@@ -8,9 +8,10 @@ import {
     Cell,
     findBestMove
 } from './Game';
+import pb from './pocketbaseClient';
 import './Tictactoe.css';
 
-function Tictactoe({game, pb}) {
+function Tictactoe({game}) {
     const [cells, setCells] = useState(game.cells);
     const [gameState, strike] = getGameState(cells);
 
@@ -44,7 +45,7 @@ function Tictactoe({game, pb}) {
             cells: cells,
             state: gameState
         });
-    }, [pb, game, cells, gameState]);
+    }, [game, cells, gameState]);
 
     makeAIMove();
 

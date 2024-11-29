@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import Tictactoe from './Tictactoe'
-import PocketBase from 'pocketbase';
+import pb from './pocketbaseClient';
 import { getEmptyCells, GAME_STATE_IN_PROGRESS } from './Game';
 import './App.css'
 
 function App() {
-    const pb = new PocketBase('http://127.0.0.1:8090');
     const [game, setGame] = useState(null);
     const [difficulty, setDifficulty] = useState(0);
 
@@ -34,7 +33,7 @@ function App() {
                     <option value="8">Legend</option>
                 </select>
             </div>
-            {game && <Tictactoe key={game.id} game={game} pb={pb} />}
+            {game && <Tictactoe key={game.id} game={game} />}
             <button onClick={startGame}>Start</button>
         </>
     )
