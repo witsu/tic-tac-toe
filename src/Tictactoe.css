@@ -4,6 +4,7 @@
     grid-template-columns: repeat(3, 1fr);
     margin-bottom: 20px;
     background: white;
+    width: 306px;
 }
 .cell {
     display: flex;

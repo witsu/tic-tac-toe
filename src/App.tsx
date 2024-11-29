@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import Tictactoe from './Tictactoe'
 import pb from './pocketbaseClient';
 import { getEmptyCells, GAME_STATE_IN_PROGRESS } from './Game';
+import { Outlet, useNavigate } from "react-router";
+
 import './App.css'
 
 function App() {
-    const [game, setGame] = useState(null);
     const [difficulty, setDifficulty] = useState(0);
+    const navigate = useNavigate();
 
     // TODO: authenticate user
     const startGame = async () => {
@@ -16,13 +17,15 @@ function App() {
           state: GAME_STATE_IN_PROGRESS,
           cells: getEmptyCells()
         });
-        setGame(game);
+        navigate(`/games/${game.id}`);
     }
+
     return (
         <>
             <h1>Tic tac toe</h1>
             <div className='difficulty'>
-                Difficulty level:
+                <button onClick={startGame}>Start new game</button>
+                as
                 <select
                     value={difficulty}
                     onChange={e => setDifficulty(Number(e.target.value))}
@@ -33,8 +36,7 @@ function App() {
                     <option value="8">Legend</option>
                 </select>
             </div>
-            {game && <Tictactoe key={game.id} game={game} />}
-            <button onClick={startGame}>Start</button>
+            <Outlet />
         </>
     )
 }

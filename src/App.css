@@ -10,6 +10,9 @@
   align-items: center;
   margin-bottom: 20px;
 }
+.difficulty button {
+  margin-right: 10px;
+}
 .difficulty select {
   font-size: 1em;
   padding: 0.5em;

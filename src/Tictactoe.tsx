@@ -50,7 +50,7 @@ function Tictactoe({game}) {
     makeAIMove();
 
     return (
-        <>
+        <div>
             <div className="cells">
                 {cells.map((value: Cell, index) => {
                     const nextPlayerClass = canClick(index) ? `next-${PLAYER_USER}` : '';
@@ -65,7 +65,7 @@ function Tictactoe({game}) {
             {gameState !== GAME_STATE_IN_PROGRESS && (
                 <div className="result">{gameState}</div>
             )}
-        </>
+        </div>
     )
 }
 export default Tictactoe;
